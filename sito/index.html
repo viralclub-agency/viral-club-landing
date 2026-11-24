@@ -64,7 +64,8 @@ button{font-family:var(--font)}
 .hero h1.hero-t{font-size:clamp(40px,7.2vw,92px);font-weight:900;line-height:1;letter-spacing:-.035em;margin-top:6px}
 .hero-t em{font-style:normal;background:linear-gradient(180deg,#ff6a63,var(--red));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 0 24px rgba(227,18,11,.35))}
 .hero h1:not(.hero-t){font-size:clamp(24px,3.4vw,36px);font-weight:800;margin-top:18px}
-.hero .sub{color:var(--muted);font-size:17px;margin-top:10px}
+.hero .sub{color:#d6d6da;font-size:clamp(18px,2.2vw,22px);font-weight:500;line-height:1.45;margin-top:16px}
+.hero .sub b{color:#fff;font-weight:800}
 
 /* search */
 .sbox{max-width:680px;margin:36px auto 0;text-align:left}
@@ -191,12 +192,13 @@ button{font-family:var(--font)}
 .wcase{grid-row:auto}
 .wcase.wbig{grid-row:auto}
 .wcase:not(.wbig) .num{font-size:clamp(44px,5.5vw,72px)}
-.wmore{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;border-radius:22px;padding:22px 26px;background:linear-gradient(90deg,rgba(227,18,11,.22),rgba(227,18,11,.06));border:2px dashed rgba(227,18,11,.6);color:var(--fg);cursor:pointer;text-align:left;transition:border-color .2s,background .2s}
+.wmore{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;border-radius:26px;padding:clamp(26px,4vw,40px) clamp(22px,4vw,44px);margin-block:10px;background:linear-gradient(90deg,rgba(227,18,11,.38),rgba(227,18,11,.1));border:2px solid var(--red);box-shadow:0 0 0 6px rgba(227,18,11,.1),0 0 50px rgba(227,18,11,.3);animation:wpulse 2.4s ease-in-out infinite;color:var(--fg);cursor:pointer;text-align:left;transition:border-color .2s,background .2s}
 .wmore:hover{border-style:solid;background:linear-gradient(90deg,rgba(227,18,11,.32),rgba(227,18,11,.1))}
 .wmore div{display:grid;gap:4px}
-.wmore span{font-size:22px;font-weight:900}
-.wmore small{font-size:13px;color:var(--muted);font-weight:600}
-.wmore b{background:var(--red);border-radius:999px;padding:10px 18px;font-size:15px}
+.wmore span{font-size:clamp(24px,3.4vw,38px);font-weight:900;line-height:1.1}
+@keyframes wpulse{50%{box-shadow:0 0 0 10px rgba(227,18,11,.05),0 0 70px rgba(227,18,11,.45)}}
+.wmore small{font-size:clamp(14px,1.6vw,17px);color:#e6e6e8;font-weight:600}
+.wmore b{background:#fff;color:#000;border-radius:999px;padding:16px 28px;font-size:clamp(16px,1.8vw,20px);font-weight:900;white-space:nowrap}
 .waltri{grid-column:1/-1;border-radius:22px;padding:24px;background:var(--panel);border:1px solid var(--line)}
 .wlab{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--red)}
 .waltri-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
@@ -316,7 +318,7 @@ button{font-family:var(--font)}
   .hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);column-gap:56px;align-items:center;text-align:left;padding-block:64px 56px}
   .hero>.kicker{grid-column:1;grid-row:1;justify-self:start}
   .hero>h1.hero-t{grid-column:1;grid-row:2;font-size:clamp(56px,5.4vw,84px)}
-  .hero>.sub{grid-column:1;grid-row:3;font-size:19px}
+  .hero>.sub{grid-column:1;grid-row:3;font-size:23px}
   .hero>.sbox{grid-column:2;grid-row:1/4;margin:0;max-width:none;align-self:center}
   .hero>.answer{grid-column:2;grid-row:4;margin:20px 0 0;max-width:none}
   .hero::after{content:"";position:absolute;left:-6%;top:8%;width:60%;height:80%;background:radial-gradient(closest-side,rgba(227,18,11,.28),transparent);pointer-events:none;z-index:-1}
@@ -336,7 +338,7 @@ button{font-family:var(--font)}
   <header class="hero">
     <div class="kicker"><i></i>Social media e pubblicità</div>
     <h1 class="hero-t">Vuoi <em>più clienti</em><br>o <em>più visibilità</em><br>per la tua attività?</h1>
-    <p class="sub">Dicci cosa ti serve.<br>Ti rispondiamo con cosa faremmo noi al posto tuo.</p>
+    <p class="sub"><b>Dicci cosa ti serve.</b><br>Ti rispondiamo con cosa faremmo noi al posto tuo.</p>
 
     <div class="sbox" id="barra">
       <div class="sq"><strong id="sq-text">Cosa ti serve?</strong><span id="sq-step">1 di 3</span></div>
