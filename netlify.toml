@@ -1,0 +1,4 @@
+# Configurazione Netlify: pubblica la cartella "sito" e la funzione che manda le lead su Telegram
+[build]
+  publish = "sito"
+  functions = "netlify/functions"
