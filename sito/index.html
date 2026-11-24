@@ -27,8 +27,8 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-body{background:var(--bg) radial-gradient(900px 560px at 50% -120px,var(--red-glow),transparent 70%) no-repeat;color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.5;margin:0;padding-bottom:96px;overflow-x:hidden}
-.wrap{max-width:1140px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body{background:var(--bg) radial-gradient(ellipse 1100px 720px at 50% -160px,rgba(227,18,11,.55),rgba(227,18,11,.18) 45%,transparent 72%) no-repeat;color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.5;margin:0;padding-bottom:96px;overflow-x:hidden}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1,h2,h3,p{margin:0}
 h1,h2,h3{text-wrap:balance}
 a{color:inherit;text-decoration:none}
@@ -149,7 +149,7 @@ button{font-family:var(--font)}
 .cases{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
 .sub-h{font-size:22px;font-weight:800;margin-top:48px}
 /* Nawave-style wall */
-.wall{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:22px;grid-auto-flow:dense}
+.wall{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:22px}
 .wv{position:relative;aspect-ratio:9/16;max-width:100%;border-radius:22px;overflow:hidden;background:#000;border:2px solid rgba(227,18,11,.75);box-shadow:0 0 0 1px rgba(227,18,11,.25),0 0 22px rgba(227,18,11,.18);transition:transform .2s,box-shadow .2s}
 .wv:hover{transform:translateY(-3px);box-shadow:0 0 0 1px var(--red),0 0 34px var(--red-glow)}
 .wv .bg{position:absolute;inset:-8%;width:116%;height:116%;object-fit:cover;filter:blur(16px) brightness(.6)}
@@ -176,7 +176,7 @@ button{font-family:var(--font)}
 .wextra span{color:#e4e4e6;font-size:14px}
 .wcase .foot{display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:700;font-size:14px}
 .wcase{grid-row:auto}
-.wcase.wbig{grid-row:span 2}
+.wcase.wbig{grid-row:auto}
 .wcase:not(.wbig) .num{font-size:clamp(44px,5.5vw,72px)}
 .wmore{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;border-radius:22px;padding:22px 26px;background:linear-gradient(90deg,rgba(227,18,11,.22),rgba(227,18,11,.06));border:2px dashed rgba(227,18,11,.6);color:var(--fg);cursor:pointer;text-align:left;transition:border-color .2s,background .2s}
 .wmore:hover{border-style:solid;background:linear-gradient(90deg,rgba(227,18,11,.32),rgba(227,18,11,.1))}
@@ -201,6 +201,9 @@ button{font-family:var(--font)}
 .wstat b{font-size:56px;font-weight:900;line-height:1}
 .wstat p{color:var(--muted)}
 .wcta{background:#fff;color:#000}
+.wall .wcta{grid-column:1/-1;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px}
+.wall .wcta>span:first-child{flex-basis:100%}
+.wall .wcta .pill{margin-top:0}
 .wcta b{font-size:24px;font-weight:900;line-height:1.15}
 .wcta .pill{align-self:flex-start;margin-top:10px;background:#000;color:#fff}
 .clients{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}
@@ -295,6 +298,17 @@ button{font-family:var(--font)}
 .bar strong{font-size:14px}
 .bar small{display:block;color:var(--muted);font-size:12px}
 
+/* ===== Desktop: titolo a sinistra, barra delle domande a destra; griglia a 5 colonne ===== */
+@media (min-width:1080px){
+  .hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);column-gap:56px;align-items:center;text-align:left;padding-block:64px 56px}
+  .hero>.kicker{grid-column:1;grid-row:1;justify-self:start}
+  .hero>h1.hero-t{grid-column:1;grid-row:2;font-size:clamp(56px,5.4vw,84px)}
+  .hero>.sub{grid-column:1;grid-row:3;font-size:19px}
+  .hero>.sbox{grid-column:2;grid-row:1/4;margin:0;max-width:none;align-self:center}
+  .hero>.answer{grid-column:2;grid-row:4;margin:20px 0 0;max-width:none}
+  .hero::after{content:"";position:absolute;left:-6%;top:8%;width:60%;height:80%;background:radial-gradient(closest-side,rgba(227,18,11,.28),transparent);pointer-events:none;z-index:-1}
+  .results h2,.services h2{font-size:52px}
+}
 @media (max-width:900px){.wall{grid-template-columns:repeat(2,minmax(0,1fr))}.wcase,.wcase.wbig{grid-row:auto;min-height:260px}.waltri-g{grid-template-columns:1fr}.clients{grid-template-columns:1fr}.wtag{font-size:10px}.phones{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding:6px 2px 18px;margin-inline:-4px}.phone{flex:0 0 46%;scroll-snap-align:start}.hint-scroll{display:block}.cases{grid-template-columns:1fr}.case{min-height:240px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cli-bot h3{font-size:16px}.av{width:32px;height:32px;font-size:14px}.two{grid-template-columns:1fr}}
 @media (max-width:520px){.cli{aspect-ratio:auto;min-height:200px}.cli .side{display:none}.cli-bot{padding-right:0}.answer{padding:22px}.stats{gap:28px}.bar small{display:none}.sugg button{font-size:15px;padding:12px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -526,7 +540,15 @@ const DOMANDE=[
     if(mostrati===null)mostrati=base;
     /* con un filtro attivo si vede tutto; con "Tutti" un cliente in più a ogni clic */
     const quanti=current==="Tutti"?mostrati:gruppi.length;
-    gruppi.slice(0,quanti).forEach(c=>{c.video.forEach(v=>w.append(videoCard(c,v)));w.append(summary(c));});
+    /* Niente buchi in griglia: il riepilogo occupa tutte le caselle rimaste nella riga */
+    const cols=window.matchMedia("(max-width:900px)").matches?2:4;
+    let pos=current==="Tutti"?4:0;
+    gruppi.slice(0,quanti).forEach(c=>{
+      c.video.forEach(v=>{w.append(videoCard(c,v));pos++;});
+      const r=cols-(pos%cols);
+      const span=r===cols?2:r;
+      const sm=summary(c);sm.style.gridColumn="span "+span;w.append(sm);pos+=span;
+    });
     const finitiGruppi=quanti>=gruppi.length;
     const altriAperti=current!=="Tutti"||mostrati>gruppi.length;
     if(!altriAperti){
@@ -551,6 +573,7 @@ const DOMANDE=[
     const p=el("span","pill");p.append(document.createTextNode("Parti da qui "),el("b",null,"→"));c.append(p);w.append(c);
   }
   drawWall();
+  window.matchMedia("(max-width:900px)").addEventListener("change",drawWall);
 
   /* ---------- pop-up in basso: compare dopo i risultati iniziano, si chiude con la X ---------- */
   const bar=$("#bar");let closed=false;
