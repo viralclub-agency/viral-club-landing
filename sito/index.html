@@ -344,6 +344,15 @@ button{font-family:var(--font)}
 @keyframes fxup{0%{opacity:0;transform:translateY(20px) scale(.8)}15%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-260px) scale(.95)}}
 @media (max-width:900px){.fxchip{font-size:10px;padding:4px 8px;opacity:.9}}
 @media (prefers-reduced-motion:reduce){.fxchip{display:none}}
+.foot-site{border-top:1px solid var(--line);padding-block:32px 110px;margin-top:20px}
+.foot-site .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px}
+.fs-brand{display:flex;align-items:center;gap:12px}
+.fs-brand img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--red)}
+.fs-brand div{display:grid}
+.fs-brand strong{font-weight:900;letter-spacing:.04em}
+.fs-brand span{font-size:13px;color:var(--muted)}
+.fs-legal{display:grid;gap:4px;font-size:13px;color:var(--muted);text-align:right}
+@media (max-width:640px){.fs-legal{text-align:left}}
 @media (max-width:640px){
   .stats{grid-template-columns:1fr;gap:10px}
   .stat{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:16px;padding:16px 18px}
@@ -422,6 +431,15 @@ button{font-family:var(--font)}
     <a class="pill toquiz" href="#barra">Prenota la chiamata gratuita <b>→</b></a>  </div></div>
 </section>
 
+<footer class="foot-site">
+  <div class="wrap">
+    <div class="fs-brand"><img src="img/av-socialchars.jpg" alt=""><div><strong>VIRAL CLUB</strong><span>di Carlo Alberto Salerno e Tommaso Amenta</span></div></div>
+    <div class="fs-legal">
+      <!-- DATI LEGALI: aggiungere qui P.IVA, sede legale, email, link a Privacy e Cookie Policy -->
+      <span>© 2026 VIRAL CLUB · Tutti i diritti riservati</span>
+    </div>
+  </div>
+</footer>
 <div class="fx" aria-hidden="true">
   <div class="side l"><span class="lab">VIEWS</span><b id="fxV">0</b><i class="track"><i id="fxVp"></i></i><small>generate in organico</small></div>
   <div class="side r"><span class="lab">FATTURATO</span><b id="fxM">€ 0</b><i class="track"><i id="fxMp"></i></i><small>in più per un cliente</small></div>
