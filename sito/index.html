@@ -328,6 +328,22 @@ button{font-family:var(--font)}
   .hero::after{content:"";position:absolute;left:-6%;top:8%;width:60%;height:80%;background:radial-gradient(closest-side,rgba(227,18,11,.28),transparent);pointer-events:none;z-index:-1}
   .results h2,.services h2{font-size:52px}
 }
+/* ===== Animazione ai lati: contatori che salgono con lo scroll + etichette che salgono ===== */
+.fx{position:fixed;inset:0;pointer-events:none;z-index:15;overflow:hidden}
+.fx .side{display:none;position:absolute;top:50%;transform:translateY(-50%);width:96px;text-align:center;gap:10px;justify-items:center}
+.fx .side.l{left:max(6px,calc((100vw - 1240px)/2 - 104px))}
+.fx .side.r{right:max(6px,calc((100vw - 1240px)/2 - 104px))}
+.fx .lab{font-size:10px;font-weight:800;letter-spacing:.16em;color:#ffb3ae}
+.fx b{font-size:20px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;white-space:nowrap;text-shadow:0 0 18px rgba(227,18,11,.7)}
+.fx small{font-size:10px;font-weight:600;color:var(--muted);line-height:1.3}
+.fx .track{position:relative;display:block;width:4px;height:200px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+.fx .track i{position:absolute;left:0;right:0;bottom:0;height:0;border-radius:4px;background:linear-gradient(0deg,var(--red),#ff8a84);box-shadow:0 0 12px var(--red)}
+@media (min-width:1420px){.fx .side{display:grid}}
+.fxchip{position:absolute;bottom:18%;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800;color:#fff;background:rgba(227,18,11,.85);box-shadow:0 0 18px rgba(227,18,11,.55);white-space:nowrap;animation:fxup 2.6s cubic-bezier(.2,.8,.2,1) forwards}
+.fxchip.g{background:rgba(255,255,255,.92);color:#000;box-shadow:0 0 18px rgba(255,255,255,.35)}
+@keyframes fxup{0%{opacity:0;transform:translateY(20px) scale(.8)}15%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-260px) scale(.95)}}
+@media (max-width:900px){.fxchip{font-size:10px;padding:4px 8px;opacity:.9}}
+@media (prefers-reduced-motion:reduce){.fxchip{display:none}}
 @media (max-width:640px){
   .stats{grid-template-columns:1fr;gap:10px}
   .stat{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:16px;padding:16px 18px}
@@ -406,6 +422,11 @@ button{font-family:var(--font)}
     <a class="pill toquiz" href="#barra">Prenota la chiamata gratuita <b>→</b></a>  </div></div>
 </section>
 
+<div class="fx" aria-hidden="true">
+  <div class="side l"><span class="lab">VIEWS</span><b id="fxV">0</b><i class="track"><i id="fxVp"></i></i><small>generate in organico</small></div>
+  <div class="side r"><span class="lab">FATTURATO</span><b id="fxM">€ 0</b><i class="track"><i id="fxMp"></i></i><small>in più per un cliente</small></div>
+  <div id="fxChips"></div>
+</div>
 <div class="bar" id="bar"><div class="in">
   <div class="bar-txt"><strong>Vuoi risultati così?</strong><small>Diventa cliente: partiamo dalla tua attività.</small></div>
   <a class="pill toquiz" href="#barra">Parti da qui <b>→</b></a>
@@ -597,6 +618,41 @@ const DOMANDE=[
   }
   drawWall();
   window.matchMedia("(max-width:900px)").addEventListener("change",drawWall);
+
+  /* ---------- animazione ai lati ---------- */
+  (function(){
+    const V=$("#fxV"),Vp=$("#fxVp"),M=$("#fxM"),Mp=$("#fxMp"),chips=$("#fxChips");
+    const fV=n=>n>=1e9?"1 mld+":n>=1e6?(n/1e6).toFixed(1).replace(".",",")+"M":n>=1e3?Math.round(n/1e3)+"K":String(Math.round(n));
+    const fM=n=>"€ "+Math.round(n).toLocaleString("it-IT");
+    let shown=0,target=0,raf=0;
+    function prog(){const h=document.documentElement.scrollHeight-innerHeight;return h>0?Math.min(1,Math.max(0,scrollY/h)):0;}
+    function tick(){
+      shown+=(target-shown)*0.12;
+      if(Math.abs(target-shown)<0.0005)shown=target;
+      const e=1-Math.pow(1-shown,2);
+      V.textContent=fV(e*1e9);M.textContent=fM(e*1e6);
+      Vp.style.height=Mp.style.height=(e*100).toFixed(1)+"%";
+      raf=shown!==target?requestAnimationFrame(tick):0;
+    }
+    function onScroll(){target=prog();if(!raf)raf=requestAnimationFrame(tick);maybeChip();}
+    const TESTI=[["▲ views",""],["▲ €€€","g"],["▲ clienti",""],["▲ follower","g"],["▲ views",""],["▲ €","g"]];
+    let last=0,k=0;
+    const reduce=window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+    function chip(){
+      if(reduce||document.hidden)return;
+      const [t,c]=TESTI[k++%TESTI.length];
+      const el2=document.createElement("span");el2.className="fxchip "+c;el2.textContent=t;
+      const wide=innerWidth>=1420,side=k%2?"left":"right";
+      const off=wide?Math.max(8,(innerWidth-1240)/2-96):4;
+      el2.style[side]=(off+Math.random()*(wide?20:2))+"px";
+      el2.style.bottom=(12+Math.random()*30)+"%";
+      chips.append(el2);setTimeout(()=>el2.remove(),2700);
+    }
+    function maybeChip(){const n=Date.now();if(n-last>650){last=n;chip();}}
+    window.addEventListener("scroll",onScroll,{passive:true});
+    setInterval(()=>{if(innerWidth>=1420)chip();},2200);
+    onScroll();
+  })();
 
   /* ---------- pop-up in basso: compare dopo i risultati iniziano, si chiude con la X ---------- */
   const bar=$("#bar");let closed=false;
