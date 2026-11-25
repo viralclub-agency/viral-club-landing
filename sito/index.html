@@ -339,6 +339,14 @@ button{font-family:var(--font)}
 .fx .track{position:relative;display:block;width:4px;height:200px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
 .fx .track i{position:absolute;left:0;right:0;bottom:0;height:0;border-radius:4px;background:linear-gradient(0deg,var(--red),#ff8a84);box-shadow:0 0 12px var(--red)}
 @media (min-width:1420px){.fx .side{display:grid}}
+.fxmini{position:absolute;left:50%;top:calc(env(safe-area-inset-top,0px) + 10px);transform:translate(-50%,-140%);display:flex;align-items:center;gap:12px;padding:8px 16px;border-radius:999px;background:rgba(16,8,8,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1.5px solid rgba(227,18,11,.7);box-shadow:0 0 24px rgba(227,18,11,.35);transition:transform .45s cubic-bezier(.2,.8,.2,1);white-space:nowrap}
+.fxmini.show{transform:translate(-50%,0)}
+.fxmini div{display:grid;line-height:1.1;text-align:center}
+.fxmini span{font-size:9px;font-weight:800;letter-spacing:.14em;color:#ffb3ae}
+.fxmini b{font-size:16px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;text-shadow:0 0 12px rgba(227,18,11,.7)}
+.fxbar{position:relative;display:block;width:56px;height:4px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden}
+.fxbar i{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,var(--red),#ff8a84);box-shadow:0 0 10px var(--red)}
+@media (min-width:1420px){.fxmini{display:none}}
 .fxchip{position:absolute;bottom:18%;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800;color:#fff;background:rgba(227,18,11,.85);box-shadow:0 0 18px rgba(227,18,11,.55);white-space:nowrap;animation:fxup 2.6s cubic-bezier(.2,.8,.2,1) forwards}
 .fxchip.g{background:rgba(255,255,255,.92);color:#000;box-shadow:0 0 18px rgba(255,255,255,.35)}
 @keyframes fxup{0%{opacity:0;transform:translateY(20px) scale(.8)}15%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-260px) scale(.95)}}
@@ -448,6 +456,7 @@ button{font-family:var(--font)}
   <div class="side l"><span class="lab">VIEWS</span><b id="fxV">0</b><i class="track"><i id="fxVp"></i></i><small>generate in organico</small></div>
   <div class="side r"><span class="lab">FATTURATO</span><b id="fxM">€ 0</b><i class="track"><i id="fxMp"></i></i><small>in più per un cliente</small></div>
   <div id="fxChips"></div>
+  <div class="fxmini" id="fxMini"><div><span>VIEWS</span><b id="fxV2">0</b></div><i class="fxbar"><i id="fxP2"></i></i><div><span>FATTURATO</span><b id="fxM2">€ 0</b></div></div>
 </div>
 <div class="bar" id="bar"><div class="in">
   <div class="bar-txt"><strong>Vuoi risultati così?</strong><small>Diventa cliente: partiamo dalla tua attività.</small></div>
@@ -643,7 +652,7 @@ const DOMANDE=[
 
   /* ---------- animazione ai lati ---------- */
   (function(){
-    const V=$("#fxV"),Vp=$("#fxVp"),M=$("#fxM"),Mp=$("#fxMp"),chips=$("#fxChips");
+    const V=$("#fxV"),Vp=$("#fxVp"),M=$("#fxM"),Mp=$("#fxMp"),chips=$("#fxChips"),V2=$("#fxV2"),M2=$("#fxM2"),P2=$("#fxP2"),mini=$("#fxMini");
     const fV=n=>n>=1e9?"1 mld+":n>=1e6?(n/1e6).toFixed(1).replace(".",",")+"M":n>=1e3?Math.round(n/1e3)+"K":String(Math.round(n));
     const fM=n=>"€ "+Math.round(n).toLocaleString("it-IT");
     let shown=0,target=0,raf=0;
@@ -652,11 +661,11 @@ const DOMANDE=[
       shown+=(target-shown)*0.12;
       if(Math.abs(target-shown)<0.0005)shown=target;
       const e=1-Math.pow(1-shown,2);
-      V.textContent=fV(e*1e9);M.textContent=fM(e*1e6);
+      V.textContent=V2.textContent=fV(e*1e9);M.textContent=M2.textContent=fM(e*1e6);P2.style.width=(e*100).toFixed(1)+"%";
       Vp.style.height=Mp.style.height=(e*100).toFixed(1)+"%";
       raf=shown!==target?requestAnimationFrame(tick):0;
     }
-    function onScroll(){target=prog();if(!raf)raf=requestAnimationFrame(tick);maybeChip();}
+    function onScroll(){mini.classList.toggle("show",scrollY>innerHeight*0.7);target=prog();if(!raf)raf=requestAnimationFrame(tick);maybeChip();}
     const TESTI=[["+ views",""],["+ €€€","g"],["+ clienti",""],["+ follower","g"],["+ views",""],["+ €","g"]];
     let last=0,k=0;
     const reduce=window.matchMedia("(prefers-reduced-motion:reduce)").matches;
