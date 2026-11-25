@@ -352,6 +352,7 @@ button{font-family:var(--font)}
 .fs-brand strong{font-weight:900;letter-spacing:.04em}
 .fs-brand span{font-size:13px;color:var(--muted)}
 .fs-legal{display:grid;gap:4px;font-size:13px;color:var(--muted);text-align:right}
+.fs-legal a{color:#e6e6e8;text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:3px}
 @media (max-width:640px){.fs-legal{text-align:left}}
 @media (max-width:640px){
   .stats{grid-template-columns:1fr;gap:10px}
@@ -435,7 +436,10 @@ button{font-family:var(--font)}
   <div class="wrap">
     <div class="fs-brand"><img src="img/av-socialchars.jpg" alt=""><div><strong>VIRAL CLUB</strong><span>di Carlo Alberto Salerno e Tommaso Amenta</span></div></div>
     <div class="fs-legal">
-      <!-- DATI LEGALI: aggiungere qui P.IVA, sede legale, email, link a Privacy e Cookie Policy -->
+      <span>P.IVA 13176260019 · C.F. 13176260019</span>
+      <span>Via Cellini 21, 10126 Torino (TO)</span>
+      <span>viralclubagency@gmail.com</span>
+      <span><a href="https://www.iubenda.com/privacy-policy/19476671" target="_blank" rel="noopener">Privacy Policy</a> · <a href="https://www.iubenda.com/privacy-policy/19476671/cookie-policy" target="_blank" rel="noopener">Cookie Policy</a></span>
       <span>© 2026 VIRAL CLUB · Tutti i diritti riservati</span>
     </div>
   </div>
@@ -750,7 +754,7 @@ const DOMANDE=[
     const email=campo("l-email","Email","email","email","Es. mario@gmail.com");
     const tel=campo("l-tel","Telefono","tel","tel","Es. 333 123 4567");
     const trap=el("input");trap.name="sito";trap.tabIndex=-1;trap.autocomplete="off";trap.className="trap";trap.setAttribute("aria-hidden","true");f.append(trap);
-    const pl=el("label","priv");const pc=el("input");pc.type="checkbox";pc.id="l-priv";pl.htmlFor="l-priv";pl.append(pc,el("span",null,"Accetto di essere ricontattato e il trattamento dei dati secondo la privacy policy."));f.append(pl);
+    const pl=el("label","priv");const pc=el("input");pc.type="checkbox";pc.id="l-priv";pl.htmlFor="l-priv";const pt=el("span",null,"Accetto di essere ricontattato e il trattamento dei dati secondo la ");const pa=el("a",null,"privacy policy");pa.href="https://www.iubenda.com/privacy-policy/19476671";pa.target="_blank";pa.rel="noopener";pt.append(pa,document.createTextNode("."));pl.append(pc,pt);f.append(pl);
     const err=el("p","lerr");err.hidden=true;
     const btn=el("button","next","Vedi cosa faremmo per te →");btn.type="submit";
     f.append(err,btn);answer.append(f);
