@@ -635,7 +635,7 @@ const DOMANDE=[
       raf=shown!==target?requestAnimationFrame(tick):0;
     }
     function onScroll(){target=prog();if(!raf)raf=requestAnimationFrame(tick);maybeChip();}
-    const TESTI=[["▲ views",""],["▲ €€€","g"],["▲ clienti",""],["▲ follower","g"],["▲ views",""],["▲ €","g"]];
+    const TESTI=[["+ views",""],["+ €€€","g"],["+ clienti",""],["+ follower","g"],["+ views",""],["+ €","g"]];
     let last=0,k=0;
     const reduce=window.matchMedia("(prefers-reduced-motion:reduce)").matches;
     function chip(){
