@@ -753,7 +753,7 @@ const DOMANDE=[
   }
   /* ---------- modulo contatti: la lead arriva sul canale Telegram ---------- */
   let lead={};
-  const LEAD_URL="/.netlify/functions/lead";
+  const LEAD_URL="/api/lead";
   function showForm(){
     answer.hidden=false;answer.replaceChildren();
     answer.append(el("h2",null,"Ultimo passo: a chi mandiamo il piano?"),el("p","ans-why","Lasciaci i tuoi contatti: vedi subito cosa faremmo per te e ti richiamiamo entro 24 ore."));
