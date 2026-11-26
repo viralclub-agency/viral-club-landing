@@ -1,0 +1,8 @@
+{
+  "framework": null,
+  "buildCommand": "",
+  "outputDirectory": "sito",
+  "rewrites": [
+    { "source": "/.netlify/functions/lead", "destination": "/api/lead" }
+  ]
+}
