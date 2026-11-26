@@ -2,3 +2,10 @@
 [build]
   publish = "sito"
   functions = "netlify/functions"
+
+# La pagina chiama /api/lead (così funziona anche su Vercel): su Netlify la giriamo alla funzione
+[[redirects]]
+  from = "/api/lead"
+  to = "/.netlify/functions/lead"
+  status = 200
+  force = true
