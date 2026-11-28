@@ -332,8 +332,9 @@ button{font-family:var(--font)}
 .tv .stand{position:relative;height:46px}
 .tv .stand::before{content:"";position:absolute;left:50%;top:0;width:64px;height:34px;transform:translateX(-50%);background:linear-gradient(90deg,#1b1b1e,#3a3a3f 50%,#1b1b1e);clip-path:polygon(18% 0,82% 0,100% 100%,0 100%)}
 .tv .stand::after{content:"";position:absolute;left:50%;bottom:0;width:240px;height:12px;transform:translateX(-50%);border-radius:6px;background:linear-gradient(180deg,#45454b,#151517);box-shadow:0 10px 24px rgba(0,0,0,.55)}
-.tv .audio{position:absolute;left:14px;bottom:14px;z-index:2;display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:9px 15px;background:rgba(10,10,10,.78);color:#fff;font:600 14px/1 var(--font);cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.35)}
-.tv .audio:hover{background:var(--red)}
+.tv .audio{position:absolute;left:14px;bottom:14px;z-index:2;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:9px 15px;background:rgba(70,70,74,.42);color:rgba(255,255,255,.92);font:600 14px/1 var(--font);cursor:pointer;transition:opacity .45s ease,visibility .45s}
+.tv .audio:hover{background:rgba(70,70,74,.6)}
+.tv .audio.via{opacity:0;visibility:hidden;pointer-events:none}
 .tv .audio b{font-size:16px}
 @media (max-width:560px){.tv{margin-top:26px}.tv .body{padding:6px;border-radius:12px}.tv .scr{border-radius:6px}.tv .chin{height:12px}.tv .stand{height:34px}.tv .stand::before{width:44px;height:24px}.tv .stand::after{width:150px;height:9px}.tv .audio{left:8px;bottom:8px;padding:7px 11px;font-size:12px}}
 @media (prefers-reduced-motion:reduce){.tv video{transition:none;opacity:1;transform:none}}
@@ -701,10 +702,18 @@ const DOMANDE=[
       if(e.isIntersecting){tv.classList.add("on");play();}else{v.pause();}
     }),{threshold:.35});
     io.observe(tv);
-    b.onclick=()=>{
+    /* il pulsante sparisce 1,5 s dopo il tocco; torna se si tocca o si passa sopra lo schermo */
+    let tm=0;
+    const nascondi=()=>{clearTimeout(tm);tm=setTimeout(()=>b.classList.add("via"),1500);};
+    const mostra=()=>{if(!b.dataset.usato)return;b.classList.remove("via");nascondi();};
+    b.onclick=e=>{
+      e.stopPropagation();b.dataset.usato="1";
       if(v.muted){v.muted=false;v.currentTime=0;play();b.innerHTML="<b>🔇</b>Togli l'audio";}
       else{v.muted=true;b.innerHTML="<b>🔊</b>Attiva l'audio";}
+      nascondi();
     };
+    const scr=tv.querySelector(".scr");
+    scr.addEventListener("click",mostra);scr.addEventListener("mousemove",mostra);
   })();
   /* ---------- pop-up in basso: compare dopo i risultati iniziano, si chiude con la X ---------- */
   const bar=$("#bar");let closed=false;
