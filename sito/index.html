@@ -66,8 +66,9 @@ button{font-family:var(--font)}
 .hero h1:not(.hero-t){font-size:clamp(24px,3.4vw,36px);font-weight:700;margin-top:18px}
 .hero .sub{color:#d6d6da;font-size:clamp(18px,2.2vw,22px);font-weight:500;line-height:1.45;margin-top:16px}
 .hero .sub b{color:#fff;font-weight:700}
-.hero-t,.hero .sub{text-wrap:balance}
-@media (min-width:1080px){.mbr{display:none}}
+.hero-t{text-wrap:balance}
+.hero .sub .l1,.hero .sub .l2{display:block;white-space:nowrap}
+@media (max-width:640px){.hero .sub{font-size:min(19px,4.55vw)}}
 
 /* search */
 .sbox{max-width:680px;margin:36px auto 0;text-align:left}
@@ -398,7 +399,7 @@ button{font-family:var(--font)}
   <header class="hero">
     <div class="kicker"><i></i>Social media e pubblicità</div>
     <h1 class="hero-t">Vuoi <em>più clienti</em><br>o <em>più visibilità</em><br>per la tua attività?</h1>
-    <p class="sub"><b>Dicci cosa ti serve.</b><br>Ti rispondiamo con cosa <br class="mbr">faremmo noi al posto tuo.</p>
+    <p class="sub"><span class="l1"><b>Dicci cosa ti serve</b> e noi ti rispondiamo</span><span class="l2">con cosa faremmo noi al posto tuo.</span></p>
 
     <div class="tv" id="tv">
       <div class="body">
