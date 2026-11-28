@@ -11,7 +11,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter+Tight:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: one centered column. Hero = big word + a Google-like search bar with ready-made answers under it (2 questions). Then results wall, two services, one CTA. */
 :root{
@@ -71,6 +71,12 @@ button{font-family:var(--font)}
 
 /* search */
 .sbox{max-width:680px;margin:36px auto 0;text-align:left}
+.hint{display:flex;align-items:flex-end;justify-content:flex-end;gap:4px;margin:4px 6px 4px 0;color:#9a9aa0;pointer-events:none}
+.hint p{margin:0;text-align:right;font:600 25px/1 "Caveat",cursive;transform:rotate(-2deg)}
+.hint small{display:block;margin-top:3px;font:600 17px/1.1 "Caveat",cursive;color:#7c7c82}
+.hint svg{flex:none;width:52px;height:42px;fill:none;stroke:#9a9aa0;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;margin-bottom:-14px;animation:hintbob 2.4s ease-in-out infinite}
+@keyframes hintbob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+@media (prefers-reduced-motion:reduce){.hint svg{animation:none}}
 .sq{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 8px 10px}
 .sq strong{font-size:18px;font-weight:700}
 .sq span{font-size:13px;font-weight:600;color:var(--muted)}
@@ -408,10 +414,14 @@ button{font-family:var(--font)}
 
     <div class="sbox" id="barra">
       <div class="sq"><strong id="sq-text">Cosa ti serve?</strong><span id="sq-step">1 di 3</span></div>
+      <div class="hint" id="hint">
+        <p>Scrivi qui ciò che ti serve<small>così capiamo qual è il servizio giusto per te</small></p>
+        <svg viewBox="0 0 90 70" aria-hidden="true"><path d="M82 6c-14 2-34 10-44 26-6 10-8 20-10 30"/><path d="M15 52l13 12 10-15"/></svg>
+      </div>
       <form class="search" id="search" role="search">
         <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
         <div class="tokens" id="tokens"></div>
-        <input id="q" type="text" maxlength="120" autocomplete="off" aria-label="Cosa ti serve?" placeholder="Scrivi o scegli qui sotto">
+        <input id="q" type="text" maxlength="120" autocomplete="off" aria-label="Cosa ti serve?" placeholder="Scrivi qui ciò che ti serve">
         <button class="go" type="submit" aria-label="Avanti">→</button>
       </form>
       <ul class="sugg" id="sugg"></ul>
@@ -733,13 +743,13 @@ const DOMANDE=[
     risposte.forEach((r,i)=>{const t=el("button","tok");t.type="button";t.title="Cambia risposta";t.append(document.createTextNode(r.t),el("b",null,"✕"));t.onclick=()=>{risposte=risposte.slice(0,i);answer.hidden=true;paint();q.focus();};tokens.append(t);});
     if(step>=DOMANDE.length){
       $("#sq-text").textContent="Ecco le tue risposte";$("#sq-step").textContent="Fatto";
-      q.placeholder="";q.hidden=true;sugg.hidden=true;$(".go").hidden=true;return;
+      q.placeholder="";q.hidden=true;sugg.hidden=true;$(".go").hidden=true;$("#hint").hidden=true;return;
     }
     q.hidden=false;$(".go").hidden=false;
     const d=DOMANDE[step];
     $("#sq-text").textContent=d.q;$("#sq-step").textContent=(step+1)+" di "+DOMANDE.length;
     q.setAttribute("aria-label",d.q);
-    q.placeholder=d.ph||"Scrivi o scegli qui sotto";
+    q.placeholder=d.ph||"Scrivi qui ciò che ti serve";$("#hint").hidden=step>0;
     list();
   }
   function list(){
